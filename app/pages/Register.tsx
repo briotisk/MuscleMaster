@@ -85,21 +85,23 @@ export default function Register() {
                 <TextInput style={styles.textInput} placeholder="Phone Number*"/>
                 <View style={styles.datePickerContainer}>
                     <View>
-                            <ThemedText style={styles.title} type="default">Date of birth:</ThemedText>
+                        <ThemedText style={styles.title} type="default">Date of birth:</ThemedText>
                     </View>
                     <View>
-                        <TextInput
-                            style={styles.dateShow}
-                            value={formatDate(date)}
-                            placeholder="Select Date"
-                            onFocus={showDatepicker}
-                            editable={false}
-                        />
                         <View style={styles.dateOfBirth}>
-                            <Button onPress={showDatepicker} title="Select Date" />
-                            <Icon name="calendar" size={25} color='#383838'/>
+                            <TextInput
+                                style={styles.dateShow}
+                                value={formatDate(date)}
+                                placeholder="Select Date"
+                                onFocus={showDatepicker}
+                                editable={false}
+                            />
+                            <Icon name="calendar" size={45} color='#383838'/>
                         </View>
-                    </View>
+                        <View style={styles.bttDate}>
+                            <Button onPress={showDatepicker} title="Select Date" />
+                        </View>
+                    </View>                    
                 </View>
                 {show && (
                     <DateTimePicker
@@ -180,8 +182,8 @@ const styles = StyleSheet.create({
         width: '100%',
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start', 
+        justifyContent: 'center',
+        alignItems: 'center', 
         padding: 0,
         paddingLeft: '10%',
         paddingRight: '10%',
@@ -206,13 +208,13 @@ const styles = StyleSheet.create({
         borderWidth: 2,
     },
     dateOfBirth: {
-        margin: 0,
-        padding: 0,
-        width: '100%',
+        marginLeft: 15,
+        paddingLeft: 20,
+        width: '90%',
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start', 
+        justifyContent: 'center',
+        alignItems: 'center', 
     },
     inputAndroid: {
         fontSize: 16,
@@ -233,5 +235,11 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         color: 'black',
         paddingRight: 30, // to ensure the text is never behind the icon
+    },
+    bttDate: {
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center', 
+        paddingLeft: 40,
     }
 });
