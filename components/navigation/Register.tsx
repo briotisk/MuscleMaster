@@ -1,6 +1,8 @@
-import { StyleSheet, View, Dimensions, TouchableHighlight, TextInput } from "react-native";
+import { StyleSheet, View, Dimensions, TouchableHighlight, TextInput, Button, Platform } from "react-native";
 import React, { useState } from 'react';
-import DatePicker from 'react-native-datepicker';
+import DateTimePicker, { DateTimePickerEvent } from '@react-native-community/datetimepicker';
+import Icon from "react-native-vector-icons/AntDesign";
+import RNPickerSelect from 'react-native-picker-select';
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
 
@@ -8,6 +10,31 @@ const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
 export default function Register() {
+
+    const [date, setDate] = useState(new Date());
+    const [show, setShow] = useState(false);
+    const [selectedCountry, setSelectedCountry] = useState('');
+
+    const countries = [
+        { label: 'Argentina', value: 'ARG' },
+        { label: 'Australia', value: 'AUS' },
+        { label: 'Brazil', value: 'BRA' },
+        { label: 'Canada', value: 'CAN' },
+        { label: 'China', value: 'CHN' },
+        { label: 'France', value: 'FRA' },
+        { label: 'Germany', value: 'DEU' },
+        { label: 'India', value: 'IND' },
+        { label: 'Italy', value: 'ITA' },
+        { label: 'Japan', value: 'JPN' },
+        { label: 'Mexico', value: 'MEX' },
+        { label: 'Russia', value: 'RUS' },
+        { label: 'Saudi Arabia', value: 'SAU' },
+        { label: 'South Africa', value: 'ZAF' },
+        { label: 'South Korea', value: 'KOR' },
+        { label: 'Turkey', value: 'TUR' },
+        { label: 'United Kingdom', value: 'GBR' },
+        { label: 'United States', value: 'USA' },
+    ];
 
     const getCurrentDate = () => {
         const date = new Date();
@@ -17,44 +44,74 @@ export default function Register() {
 
         return `${day}/${month}/${year}`;
     };
-
     const currentDate = getCurrentDate();
-    const [date, setDate] = useState(currentDate);
-   
 
-  return (
+    const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
+        const currentDate = selectedDate || date;
+        setShow(Platform.OS === 'ios');
+        setDate(currentDate);
+    };
+
+    const showDatepicker = () => {
+        setShow(true);
+    };
+
+    const formatDate = (date: Date): string => {
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Janeiro é 0!
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`;
+    };
+
+    return (
         <ThemedView style={styles.container}>
             <ThemedText style={styles.title} type="title">Muscle Master</ThemedText>
             <ThemedText style={styles.title} type="subtitle">Register</ThemedText>
             <View style={styles.inputContainer}>
                 <TextInput style={styles.textInput} placeholder="Username*"/>
-                <TextInput style={styles.textInput} placeholder="Country*"/>
+                <RNPickerSelect
+                placeholder={{
+                    label: 'Country*',
+                    value: null,
+                }}
+                items={countries}
+                onValueChange={(value) => setSelectedCountry(value)}
+                style={{
+                    inputIOS: styles.inputIOS,
+                    inputAndroid: styles.inputAndroid,
+                }}
+                value={selectedCountry}
+            />
                 <TextInput style={styles.textInput} placeholder="Phone Number*"/>
-                <DatePicker
-                    style={styles.datePicker}
-                    date={date}
-                    mode="date"
-                    placeholder="Selecione a Data"
-                    format="DD/MM/YYYY"
-                    minDate="01/01/1900"
-                    maxDate={currentDate}
-                    confirmBtnText="Confirmar"
-                    cancelBtnText="Cancelar"
-                    customStyles={{
-                        dateIcon: {
-                            position: 'absolute',
-                            left: 0,
-                            top: 4,
-                            marginLeft: 0,
-                        },
-                        dateInput: {
-                            marginLeft: 36,
-                        },
-                    }}
-                    onDateChange={(date) => {
-                        setDate(date);
-                    }}
-                />
+                <View style={styles.datePickerContainer}>
+                    <View>
+                        <View style={styles.dateOfBirth}>
+                            <ThemedText style={styles.title} type="default">Date of birth:</ThemedText>
+                            <Icon name="calendar" size={25} color='#383838'/>
+                        </View>
+                    </View>
+                    <View>
+                        <TextInput
+                            style={styles.dateShow}
+                            value={formatDate(date)}
+                            placeholder="Select Date"
+                            onFocus={showDatepicker}
+                            editable={false}
+                        />
+                        <Button onPress={showDatepicker} title="Select Date" />
+                    </View>
+                </View>
+                {show && (
+                    <DateTimePicker
+                        testID="dateTimePicker"
+                        value={date}
+                        mode="date"
+                        display="default"
+                        onChange={onChange}
+                        minimumDate={new Date(1900, 0, 1)}
+                        maximumDate={new Date()}
+                    />
+                )}
                 <TextInput style={styles.textInput} placeholder="Email*"/>
                 <TextInput style={styles.textInput} placeholder="Password*"/>
                 <TextInput style={styles.textInput} placeholder="Re-enter Password*"/>
@@ -65,7 +122,7 @@ export default function Register() {
                 </View>
             </TouchableHighlight>
         </ThemedView>
-  );
+    );
 }
 
 const styles = StyleSheet.create({
@@ -119,5 +176,62 @@ const styles = StyleSheet.create({
         gap: 8,
         paddingLeft: 0,
     },
-    
+    datePickerContainer: {
+        width: '100%',
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start', 
+        padding: 0,
+        paddingLeft: '10%',
+        paddingRight: '10%',
+    },    
+    dateShow: {
+        backgroundColor: 'white',
+        color: 'black',
+        paddingRight: 10,
+        paddingLeft: 10,
+        paddingBottom: 5,
+        paddingTop: 5,
+        marginLeft: 10,
+        borderColor: '#383838',
+        borderRadius: 5,
+        borderWidth: 2,
+    },
+    pickerSelectStyles: {
+        backgroundColor: 'white',
+        color: 'black',
+        borderColor: '#383838',
+        borderRadius: 5,
+        borderWidth: 2,
+    },
+    dateOfBirth: {
+        margin: 0,
+        padding: 0,
+        width: '100%',
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start', 
+    },
+    inputAndroid: {
+        fontSize: 16,
+        paddingHorizontal: 10,
+        paddingVertical: 8,
+        borderWidth: 0.5,
+        borderColor: 'gray',
+        borderRadius: 8,
+        color: 'black',
+        paddingRight: 30, // to ensure the text is never behind the icon
+    },
+    inputIOS: {
+        fontSize: 16,
+        paddingVertical: 12,
+        paddingHorizontal: 10,
+        borderWidth: 1,
+        borderColor: 'gray',
+        borderRadius: 4,
+        color: 'black',
+        paddingRight: 30, // to ensure the text is never behind the icon
+    }
 });
