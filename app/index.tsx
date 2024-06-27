@@ -1,16 +1,17 @@
-import { Text, View } from "react-native";
-import { ThemedView } from "@/components/ThemedView";
-import { ThemedText } from "@/components/ThemedText";
-import Login from "@/components/navigation/Login";
-import Register from "@/components/navigation/Register";
-import TreinosCadastrados from "@/components/navigation/TreinosCadastrados";
-import Perfil from "@/components/navigation/Perfil";
+import { Link } from 'expo-router';
+import { View, Text, Button } from 'react-native';
 
-
-export default function Index() {
+export default function Home() {
   return (
     <View>
-      <Register/> 
+      <Text>Home Screen</Text>
+      <Link href="pages/Login">
+        Login
+      </Link>
+      <Link href="pages/Register">
+        Register
+      </Link>
     </View>
   );
 }
+

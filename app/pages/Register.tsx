@@ -85,10 +85,7 @@ export default function Register() {
                 <TextInput style={styles.textInput} placeholder="Phone Number*"/>
                 <View style={styles.datePickerContainer}>
                     <View>
-                        <View style={styles.dateOfBirth}>
                             <ThemedText style={styles.title} type="default">Date of birth:</ThemedText>
-                            <Icon name="calendar" size={25} color='#383838'/>
-                        </View>
                     </View>
                     <View>
                         <TextInput
@@ -98,7 +95,10 @@ export default function Register() {
                             onFocus={showDatepicker}
                             editable={false}
                         />
-                        <Button onPress={showDatepicker} title="Select Date" />
+                        <View style={styles.dateOfBirth}>
+                            <Button onPress={showDatepicker} title="Select Date" />
+                            <Icon name="calendar" size={25} color='#383838'/>
+                        </View>
                     </View>
                 </View>
                 {show && (
