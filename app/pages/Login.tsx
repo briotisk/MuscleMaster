@@ -1,7 +1,7 @@
 import { StyleSheet, View, Dimensions, TouchableHighlight, TextInput, Image } from "react-native";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
-
+//Teste de commit
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
