@@ -5,11 +5,15 @@ import Icon from "react-native-vector-icons/AntDesign";
 import RNPickerSelect from 'react-native-picker-select';
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
+import { Link } from 'expo-router';
+import { createTable, insertUser } from '../../database';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
 export default function Register() {
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
 
     const [date, setDate] = useState(new Date());
     const [show, setShow] = useState(false);
@@ -119,9 +123,9 @@ export default function Register() {
                 <TextInput style={styles.textInput} placeholder="Re-enter Password*"/>
             </View>
             <TouchableHighlight style={styles.btt}>
-                <View>
+            <Link href="/pages/TreinosCadastrados"><View>
                     <ThemedText type="default">Register</ThemedText>
-                </View>
+                </View></Link>
             </TouchableHighlight>
         </ThemedView>
     );
@@ -161,7 +165,10 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         width: '100%',
         borderBottomWidth: 1,
-        borderBottomColor: '#000', 
+        borderRadius: 3,
+        borderBottomColor: '#000',
+        color: 'gray',
+        backgroundColor: '#383838',
     },
     title: {
         color: '#383838',
@@ -223,8 +230,9 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         borderColor: 'gray',
         borderRadius: 8,
-        color: 'black',
-        paddingRight: 30, // to ensure the text is never behind the icon
+        color: 'gray',
+        paddingRight: 30,
+        backgroundColor: '#383838',
     },
     inputIOS: {
         fontSize: 16,
@@ -233,8 +241,9 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'gray',
         borderRadius: 4,
-        color: 'black',
-        paddingRight: 30, // to ensure the text is never behind the icon
+        color: 'gray',
+        paddingRight: 30,
+        backgroundColor: '#383838',
     },
     bttDate: {
         width: '100%',

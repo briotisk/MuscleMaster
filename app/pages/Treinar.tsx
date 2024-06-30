@@ -6,34 +6,29 @@ import { Link } from 'expo-router';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
-export default function TreinosCadastrados() {
+export default function Treinar() {
 
   return (
     <ThemedView style={styles.container}>
-      <ThemedText style={styles.title} type="title">Muscle Master</ThemedText>
+      <ThemedText style={styles.title} type="title">Adicione um exercício</ThemedText>
       
-      <ThemedView style={styles.treinoContainer}>
-        <ThemedText type="subtitle">Treino A</ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.treinoContainer}>
-        <ThemedText type="subtitle">Treino B</ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.treinoContainer}>
-        <ThemedText type="subtitle">Treino C</ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.treinoContainer}>
-        <ThemedText type="subtitle">Treino D</ThemedText>
-      </ThemedView>
+      <TextInput style={styles.textInput} placeholder="Nome do exercício*"/>
+      <TextInput style={styles.textInput} placeholder="Carga*"/>
+      <TouchableHighlight style={styles.btt}>
+        <Link href="/pages/Recordes"><View>
+                <ThemedText type="default">Adicionar</ThemedText>
+            </View></Link>
+        </TouchableHighlight>
 
       <ThemedView style={styles.bottomBar}>
         <TouchableOpacity style={styles.bottomButton}>
           <ThemedText style={styles.bottomButtonText}>Home</ThemedText>
         </TouchableOpacity>
         <TouchableOpacity style={styles.bottomButton}>
-          <ThemedText style={styles.bottomButtonText}>Treinos</ThemedText>
+        <Link href="/pages/TreinosCadastrados"><ThemedText style={styles.bottomButtonText}>Treinos</ThemedText></Link>
         </TouchableOpacity>
         <TouchableOpacity style={styles.bottomButton}>
-        <Link href="/pages/Treinar"><ThemedText style={styles.bottomButtonText}>Treinar</ThemedText></Link>
+          <ThemedText style={styles.bottomButtonText}>Treinar</ThemedText>
         </TouchableOpacity>
         <TouchableOpacity style={styles.bottomButton}>
         <Link href="/pages/Recordes"><ThemedText style={styles.bottomButtonText}>Recordes</ThemedText></Link>
@@ -59,28 +54,28 @@ const styles = StyleSheet.create({
         paddingBottom: 40,
         gap: 8,
     },
-    treinoContainer: {
+    textInput: {
         width: '80%',
-        height: 100,
-        padding: 20,
-        marginVertical: 10,
+        height: 55,
+        padding: 8,
+        marginVertical: 8,
         backgroundColor: '#FBBA00',
         borderRadius: 10,
-        alignItems: 'center',
+        alignItems: 'left',
         justifyContent: 'center',
     },
     bottomBar: {
-      flexDirection: 'row',
-      justifyContent: 'space-around',
-      alignItems: 'center',
-      width: '100%',
-      backgroundColor: '#FBBA00', // Cor de fundo da barra
-      borderTopWidth: 1,
-      borderTopColor: '#ccc',
-      height: 60,
-      position: 'absolute', // Torna a barra fixa
-      bottom: 130,
-    },
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        width: '100%',
+        backgroundColor: '#FBBA00', // Cor de fundo da barra
+        borderTopWidth: 1,
+        borderTopColor: '#ccc',
+        height: 60,
+        position: 'absolute', // Torna a barra fixa
+        bottom: 130,
+      },
       bottomButton: {
         flex: 1,
         justifyContent: 'center',
@@ -90,5 +85,12 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#333',
       },
+      smallSubtitle: {
+        fontSize: 22,
+        color: '#333',
+    },
+    btt: {
+        margin: 10,
+    },
     
 });
